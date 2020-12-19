@@ -4,7 +4,6 @@ const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
-const { restart } = require('nodemon')
 const notesRouter = require('./notes/notes-router')
 const foldersRouter = require('./folders/folders-router')
 
