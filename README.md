@@ -1,26 +1,64 @@
-# Express Boilerplate!
+# Noteful API
 
-This is a boilerplate project used for starting new projects!
+Used in conjunction with the Noteful app, this API provides the functionality to create, save, edit, and delete notes and folders.
 
-## Set up
+You can also view the [live site](https://noteful-lyart-nine.vercel.app/) or visit the [frontend repo](https://github.com/kayleidoscope/noteful).
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+This API is not open for public use at this time, but is CORS compatible. The API will respond with a JSON object.
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+## Endpoints
 
-## Scripts
+### /users
 
-Start the application `npm start`
+Route | Request | Body | Result
+----- | ------- | ------ | ------
+/notes | GET | | returns all notes
+/notes | POST | username | creates a new note
+/notes/:id | GET | | returns the note with that ID
+/notes/:id | DELETE | | deletes the note with that ID
+/notes/:id | PATCH | | updates a note
 
-Start nodemon for the application `npm run dev`
+Query param | Type
+----------- | ----
+id | number
+name | string
+content | string
+date_modified | date-time
+folder | number
 
-Run the tests `npm test`
+### /folders
 
-## Deploying
+Route | Request | Body | Query params | Result
+----- | ------- | ---- | ------ | ------
+/folders | GET | | | returns all folders
+/folders | POST | *id, *name | | adds a new folder to the database
+/folders/:id | GET | | | returns the folder with that ID
+/folders/:id | DELETE | | | deletes the folder with that ID
+/folders/:id | PATCH | *id and/or *name | | updates a folder
 
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's main branch.
+Query param | Type
+----------- | ----
+id | number
+name | string
+
+## Status codes
+
+Code | Endpoint | Request | Possible reason
+---- | --------------- | ------ | -------
+500 | any | any | Server error
+200 | any | GET | Data was successfully returned.
+201 | any | POST | Your POST was successful.
+204 | any with an id path param | PATCH | Your entry was successfully updated.
+204 | any with an id path param | DELETE | Your entry was successfully deleted.
+400 | any | POST | A required query param in the body is missing.
+404 | any with an id path param | GET, DELETE, or PATCH | An entry with that ID doesn't exist.
+400 | any with an id path param | PATCH | You must include at least one of the query params in the body.
+
+## Tech Stack
+
+* Javascript
+* React
+* Node.js
+* Postgres
+* HTML
+* CSS
